@@ -41,7 +41,6 @@ int main(int argc, char **argv) {
 		return usage(argv[0]);
 	} else {
 		uint64_t num = strtoll(argv[1], NULL, 10);
-		num = abs(num);
-		printf("square(%lld) is %lld\n", num, square_sum(num));
+		printf("square(%lld) is %lld\n", num, square_sum(abs(num)));
 	}
 }
