@@ -21,12 +21,13 @@ k + 1 = 2 + 1 = 3: 2(0) + 1 + 2(1) + 1 + 2(2) + 1 = 9
 #include <ctype.h>
 #include <stdint.h>
 
+// recursive calculuation of series
 uint64_t square_sum(uint64_t num) {
-	uint64_t n = 0;
-	for (uint64_t i = 0; i < num; i++) {
-		n += (2 * i) + 1;
+	if (num == 0) {
+		return 0;
+	} else {
+		return (2 * (num - 1)) + 1 + square_sum(num  - 1);
 	}
-	return n;
 }
 
 int usage(char *name) {
