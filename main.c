@@ -23,8 +23,8 @@ k + 1 = 2 + 1 = 3: 2(0) + 1 + 2(1) + 1 + 2(2) + 1 = 9
 
 // recursive calculuation of series
 uint64_t square_sum(uint64_t num) {
-	if (num == 1) {
-		return 1;
+	if (num == 0) {
+		return 0;
 	} else {
 		return (2 * (num - 1)) + 1 + square_sum(num  - 1);
 	}
@@ -41,6 +41,7 @@ int main(int argc, char **argv) {
 		return usage(argv[0]);
 	} else {
 		uint64_t num = strtoll(argv[1], NULL, 10);
+		num = abs(num);
 		printf("square(%lld) is %lld\n", num, square_sum(num));
 	}
 }
