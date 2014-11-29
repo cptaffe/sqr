@@ -23,8 +23,8 @@ k + 1 = 2 + 1 = 3: 2(0) + 1 + 2(1) + 1 + 2(2) + 1 = 9
 
 // recursive calculuation of series
 uint64_t square_sum(uint64_t num) {
-	if (num == 0) {
-		return 0;
+	if (num == 1) {
+		return 1;
 	} else {
 		return (2 * (num - 1)) + 1 + square_sum(num  - 1);
 	}
