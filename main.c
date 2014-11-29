@@ -31,7 +31,7 @@ uint64_t square_sum(uint64_t num) {
 }
 
 int usage(char *name) {
-	printf("usage: %s num\n", name);
+	printf("usage: %s [num]\n", name);
 	return 1;
 }
 
