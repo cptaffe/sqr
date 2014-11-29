@@ -26,7 +26,7 @@ uint64_t square_sum(uint64_t num) {
 	if (num == 0) {
 		return 0;
 	} else {
-		return (2 * (num - 1)) + 1 + square_sum(num  - 1);
+		return ((num - 1) << 1) + 1 + square_sum(num  - 1);
 	}
 }
 
