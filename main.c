@@ -75,7 +75,7 @@ int main(int argc, char **argv) {
 				usage(argv[0]);
 			} else {
 				fprintf(stderr, "%s\n", strerror(errno));
-				// return usage(argv[0]);
+				usage(argv[0]);
 			}
 			return 1;
 		} else {
