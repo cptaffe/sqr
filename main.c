@@ -22,6 +22,7 @@ k + 1 = 2 + 1 = 3: 2(0) + 1 + 2(1) + 1 + 2(2) + 1 = 9
 #include <stdint.h>
 #include <errno.h>
 #include <string.h>
+#include <limits.h>
 
 const char *i_flag = "-i";
 const char *i_long_flag = "--iterative";
@@ -65,7 +66,18 @@ int main(int argc, char **argv) {
 
 		// catch conversion error
 		if (errno != 0) {
-			return usage(argv[0]);
+			if (errno == ERANGE && num == LLONG_MAX) {
+				fprintf(stderr, "number too large, max: %lld\n", LLONG_MAX);
+			} else if (errno == ERANGE && num == LLONG_MIN) {
+				fprintf(stderr, "number too small, min: %lld\n", LLONG_MIN);
+			} else if (errno == EINVAL) {
+				fprintf(stderr, "first argument must be a number\n");
+				usage(argv[0]);
+			} else {
+				fprintf(stderr, "%s\n", strerror(errno));
+				// return usage(argv[0]);
+			}
+			return 1;
 		} else {
 
 			// handle command line options
