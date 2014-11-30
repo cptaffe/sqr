@@ -20,6 +20,15 @@ k + 1 = 2 + 1 = 3: 2(0) + 1 + 2(1) + 1 + 2(2) + 1 = 9
 #include <stdlib.h>
 #include <ctype.h>
 #include <stdint.h>
+#include <errno.h>
+#include <string.h>
+
+extern int errno;
+
+const char *i_flag = "-i";
+const char *i_long_flag = "--iterative";
+const char *r_flag = "-r";
+const char *r_long_flag = "--recursive";
 
 // recursive calculuation of series
 uint64_t square_sum_rec(uint64_t num) {
@@ -40,16 +49,43 @@ uint64_t square_sum(uint64_t num) {
 }
 
 int usage(char *name) {
-	printf("usage: %s [num]\n", name);
+	fprintf(stderr, "usage: %s [num] [%s | %s | %s | %s]\n", name, i_flag, i_long_flag, r_flag, r_long_flag);
 	return 1;
 }
 
 int main(int argc, char **argv) {
 
-	if (argc != 2) {
+	if (argc < 2) {
 		return usage(argv[0]);
 	} else {
+
+		uint64_t (*func)(uint64_t) = square_sum; // square function
+
+		// first argument must always be number
+		errno = 0;
 		uint64_t num = strtoll(argv[1], NULL, 10);
-		printf("square(%lld) is %lld\n", num, square_sum(abs(num)));
+
+		// catch conversion error
+		if (errno != 0) {
+			return usage(argv[0]);
+		} else {
+
+			// handle command line options
+			for (int i = 2; i < argc; i++) {
+				if (strcmp(argv[i], r_flag) == 0
+					|| strcmp(argv[i], r_long_flag) == 0) {
+					func = square_sum_rec;
+				} else if (strcmp(argv[i], i_flag) == 0
+					|| strcmp(argv[i], i_long_flag) == 0) {
+					func = square_sum;
+				} else {
+					// unknown argument, error.
+					fprintf(stderr, "unrecognized argument '%s'\n", argv[i]);
+					return usage(argv[0]);
+				}
+			}
+
+			printf("%lld\n", func(abs(num)));
+		}
 	}
 }
