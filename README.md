@@ -15,6 +15,10 @@ usage: ./sqr [num] [-i | --iterative | -r | --recursive]
 
 The `--iterative` flag uses the iterative function, wheras the `--recursive` flag uses the recursive method. They have shorthand flags of `-i` and `-r` respectively.
 
+## Performance
+
+The recursive method is both much slower on larger numbers and will segfault as it runs out of stack space. As such, the iterative method is default and is both much faster and takes up minimal stack space.
+
 ## Math
 
 ```
