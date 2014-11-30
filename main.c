@@ -23,8 +23,6 @@ k + 1 = 2 + 1 = 3: 2(0) + 1 + 2(1) + 1 + 2(2) + 1 = 9
 #include <errno.h>
 #include <string.h>
 
-extern int errno;
-
 const char *i_flag = "-i";
 const char *i_long_flag = "--iterative";
 const char *r_flag = "-r";
