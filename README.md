@@ -7,6 +7,14 @@ calculates the square of a number as a series of differences of squares.
 
 This program is not very efficient nor useful, but it is a delve into using some cool mathematics.
 
+## Usage
+
+```
+usage: ./sqr [num] [-i | --iterative | -r | --recursive]
+```
+
+The `--iterative` flag uses the iterative function, wheras the `--recursive` flag uses the recursive method. They have shorthand flags of `-i` and `-r` respectively.
+
 ## Math
 
 ```
