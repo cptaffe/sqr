@@ -60,41 +60,54 @@ int main(int argc, char **argv) {
 
 		uint64_t (*func)(uint64_t) = square_sum; // square function
 
-		// first argument must always be number
-		errno = 0;
-		uint64_t num = strtoll(argv[1], NULL, 10);
+		int num_arg_exists = 0; // number argument must exist
+		uint64_t num; // num arg
 
-		// catch conversion error
-		if (errno != 0) {
-			if (errno == ERANGE && num == LLONG_MAX) {
-				fprintf(stderr, "number too large, max: %lld\n", LLONG_MAX);
-			} else if (errno == ERANGE && num == LLONG_MIN) {
-				fprintf(stderr, "number too small, min: %lld\n", LLONG_MIN);
-			} else if (errno == EINVAL) {
-				fprintf(stderr, "first argument must be a number\n");
-				usage(argv[0]);
-			} else {
-				fprintf(stderr, "%s\n", strerror(errno));
-				usage(argv[0]);
-			}
-			return 1;
-		} else {
+		// handle command line options
+		for (int i = 1; i < argc; i++) {
 
-			// handle command line options
-			for (int i = 2; i < argc; i++) {
+			// parse option
+			if (argv[i][0] == '-') {
 				if (strcmp(argv[i], r_flag) == 0
-					|| strcmp(argv[i], r_long_flag) == 0) {
+				|| strcmp(argv[i], r_long_flag) == 0) {
 					func = square_sum_rec;
 				} else if (strcmp(argv[i], i_flag) == 0
-					|| strcmp(argv[i], i_long_flag) == 0) {
+				|| strcmp(argv[i], i_long_flag) == 0) {
 					func = square_sum;
 				} else {
 					// unknown argument, error.
 					fprintf(stderr, "unrecognized argument '%s'\n", argv[i]);
 					return usage(argv[0]);
 				}
+			} else {
+				// check if the number, else error
+				errno = 0;
+				num = strtoll(argv[i], NULL, 10);
+				// catch conversion error
+				if (errno != 0) {
+					// error appropriately
+					if (errno == ERANGE && num == LLONG_MAX) {
+						fprintf(stderr, "number too large, max: %lld\n", LLONG_MAX);
+					} else if (errno == ERANGE && num == LLONG_MIN) {
+						fprintf(stderr, "number too small, min: %lld\n", LLONG_MIN);
+					} else if (errno == EINVAL) {
+						fprintf(stderr, "unrecognized argument '%s'\n", argv[i]);
+						usage(argv[0]);
+					} else {
+						fprintf(stderr, "%s\n", strerror(errno));
+						usage(argv[0]);
+					}
+					return 1;
+				} else {
+					num_arg_exists++;
+				}
 			}
+		}
 
+		// check if args are satisfied
+		if (num_arg_exists != 1) {
+			return usage(argv[0]);
+		} else {
 			printf("%lld\n", func(abs(num)));
 		}
 	}
