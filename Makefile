@@ -11,3 +11,6 @@ $(BIN): $(OBJ)
 
 clean:
 	rm $(OBJ) $(BIN)
+
+test:
+	./test.sh
