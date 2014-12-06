@@ -5,7 +5,9 @@ SRC = main.c
 OBJ = $(SRC:.c=.o)
 BIN = sqr
 
-all: $(BIN)
+# make binary, test
+all: $(BIN) test
+
 $(BIN): $(OBJ)
 	$(CC) $(CFLAGS) -o $(BIN) $(OBJ)
 
@@ -13,4 +15,4 @@ clean:
 	rm $(OBJ) $(BIN)
 
 test:
-	./test.sh
+	./test.sh $(BIN)

@@ -7,8 +7,17 @@ set -o pipefail
 set -o nounset
 # set -o xtrace
 
+usage() {
+	echo "${0} command"
+}
+
 # config
-CMD="./sqr"
+if test "${#}" -ge 1; then
+	CMD="${1}"
+else
+	usage;
+	exit 1
+fi
 
 # totals
 PASS=0
@@ -16,13 +25,13 @@ FAIL=0
 
 # what to do on failure
 fail() {
-	$((FAIL++))
+	((FAIL++))
 	echo "fail!"
 }
 
 # what to do on success
 pass() {
-	$((PASS++))
+	((PASS++))
 	echo "pass!"
 }
 
@@ -30,6 +39,9 @@ sum() {
 	echo # whitespace
 	echo "passes: ${PASS}"
 	echo "failures: ${FAIL}"
+	if test "${FAIL}" -gt 0; then
+		exit 1
+	fi
 }
 
 # tests

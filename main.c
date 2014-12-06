@@ -48,7 +48,7 @@ uint64_t square_sum(uint64_t num) {
 }
 
 int usage(char *name) {
-	fprintf(stderr, "usage: %s [num] [%s | %s | %s | %s]\n", name, i_flag, i_long_flag, r_flag, r_long_flag);
+	fprintf(stderr, "usage: %s num [%s | %s | %s | %s]\n", name, i_flag, i_long_flag, r_flag, r_long_flag);
 	return 1;
 }
 
