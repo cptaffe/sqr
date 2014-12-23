@@ -1,5 +1,5 @@
 
-CFLAGS = -g
+CFLAGS = -g --std=c89
 
 # compiling options
 SRC = src/main.c

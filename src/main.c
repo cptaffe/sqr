@@ -41,7 +41,7 @@ uint64_t square_sum_rec(uint64_t num) {
 // iterative calculation of series
 uint64_t square_sum(uint64_t num) {
 	uint64_t n = 0;
-	for (uint64_t i = 0; i < num; i++) {
+	uint64_t i; for (i = 0; i < num; i++) {
 		n += (i << 1) + 1;
 	}
 	return n;
@@ -63,8 +63,8 @@ int main(int argc, char **argv) {
 		int num_args = 0; // number of numbers as arguments
 		uint64_t num; // num arg
 
-		// handle command line options
-		for (int i = 1; i < argc; i++) {
+		// handle command line options (c89 compatible for loop)
+		int i; for (i = 1; i < argc; i++) {
 
 			// parse option
 			if (argv[i][0] == '-') {
