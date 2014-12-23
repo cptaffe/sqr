@@ -5,7 +5,7 @@ calculates the square of a number as a series of differences of squares.
 
 ## Resoning
 
-This program is not very efficient nor useful, but it is a delve into using some cool mathematics.
+This program is not very efficient nor useful, but it is a delve into using some very simple but interesting mathematics.
 
 ## Usage
 
