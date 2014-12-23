@@ -41,4 +41,5 @@ install:
 # uninstalls installed files
 remove:
 	$(RM) $(INSTBIN)/$(notdir $(BIN))
+	mkdir -p $(dir $(INSTMAN))
 	$(RM) $(INSTMAN)/$(notdir $(MAN))
