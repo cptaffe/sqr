@@ -22,7 +22,7 @@ The recursive method is both much slower on larger numbers and will segfault as 
 ## Math
 
 ```
-f = x -> x^2
+f: x -> x^2
 
 f(x + 1) - x^2 = 2x + 1
 
