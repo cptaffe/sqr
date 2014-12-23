@@ -81,17 +81,18 @@ int main(int argc, char **argv) {
 				}
 			} else {
 				// check if a number, else error
-				char *end = argv[i] + strlen(argv[i]);
+				char *end = NULL;
 				errno = 0;
 				num = strtoll(argv[i], &end, 10);
-				// catch conversion error
-				if (errno != 0) {
+				// catch conversion error (GNU strtoll does not set errno)
+				if (errno != 0 || argv[i] == end) {
 					// error appropriately
 					if (errno == ERANGE && num == LLONG_MAX) {
 						fprintf(stderr, "number too large, max: %lld\n", LLONG_MAX);
 					} else if (errno == ERANGE && num == LLONG_MIN) {
 						fprintf(stderr, "number too small, min: %lld\n", LLONG_MIN);
-					} else if (errno == EINVAL) {
+					} else if (errno == EINVAL || errno == 0) {
+						// catch all if no error.
 						fprintf(stderr, "unrecognized argument '%s'\n", argv[i]);
 						usage(argv[0]);
 					} else {
