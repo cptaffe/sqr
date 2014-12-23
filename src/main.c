@@ -47,15 +47,15 @@ uint64_t square_sum(uint64_t num) {
 	return n;
 }
 
-int usage(char *name) {
+void usage(char *name) {
 	fprintf(stderr, "usage: %s num [%s | %s | %s | %s]\n", name, i_flag, i_long_flag, r_flag, r_long_flag);
-	return 1;
 }
 
 int main(int argc, char **argv) {
 
 	if (argc < 2) {
-		return usage(argv[0]);
+		usage(argv[0]);
+		return EXIT_FAILURE;
 	} else {
 
 		uint64_t (*func)(uint64_t) = square_sum; // square function
@@ -77,7 +77,8 @@ int main(int argc, char **argv) {
 				} else {
 					// unknown argument, error.
 					fprintf(stderr, "unrecognized argument '%s'\n", argv[i]);
-					return usage(argv[0]);
+					usage(argv[0]);
+					return EXIT_FAILURE;
 				}
 			} else {
 				// check if a number, else error
@@ -85,21 +86,25 @@ int main(int argc, char **argv) {
 				errno = 0;
 				num = strtoll(argv[i], &end, 10);
 				// catch conversion error (GNU strtoll does not set errno)
-				if (errno != 0 || argv[i] == end) {
+				if (argv[i] == end) {
 					// error appropriately
-					if (errno == ERANGE && num == LLONG_MAX) {
-						fprintf(stderr, "number too large, max: %lld\n", LLONG_MAX);
-					} else if (errno == ERANGE && num == LLONG_MIN) {
-						fprintf(stderr, "number too small, min: %lld\n", LLONG_MIN);
-					} else if (errno == EINVAL || errno == 0) {
-						// catch all if no error.
+					if (errno != 0) {
+						if (errno == ERANGE && num == LLONG_MAX) {
+							fprintf(stderr, "number too large, max: %lld\n", LLONG_MAX);
+						} else if (errno == ERANGE && num == LLONG_MIN) {
+							fprintf(stderr, "number too small, min: %lld\n", LLONG_MIN);
+						} else if (errno == EINVAL) {
+							fprintf(stderr, "unrecognized argument '%s'\n", argv[i]);
+							usage(argv[0]);
+						} else {
+							fprintf(stderr, "%s\n", strerror(errno));
+							usage(argv[0]);
+						}
+					} else {
 						fprintf(stderr, "unrecognized argument '%s'\n", argv[i]);
 						usage(argv[0]);
-					} else {
-						fprintf(stderr, "%s\n", strerror(errno));
-						usage(argv[0]);
 					}
-					return 1;
+					return EXIT_FAILURE;
 				} else {
 					num_args++;
 				}
@@ -108,7 +113,8 @@ int main(int argc, char **argv) {
 
 		// check if args are satisfied
 		if (num_args != 1) { // accepts only one numerical argument
-			return usage(argv[0]);
+			usage(argv[0]);
+			return EXIT_FAILURE;
 		} else {
 			printf("%lld\n", func(abs(num)));
 		}
