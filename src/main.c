@@ -81,7 +81,7 @@ int main(int argc, char **argv) {
 				}
 			} else {
 				// check if a number, else error
-				char *end = argv[i] + strlen(argv[i]);
+				char *end = NULL;
 				errno = 0;
 				num = strtoll(argv[i], &end, 10);
 				// catch conversion error
