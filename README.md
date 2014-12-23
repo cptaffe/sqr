@@ -9,7 +9,7 @@ This program is not very efficient nor useful, but it is a delve into using some
 
 ## Systems
 
-Debian Linux (Jessie/testing) and OS X (Darwin) are the only tested platforms. Weak points for portability are man directory location and library functions.
+Debian Linux (Jessie/testing) and OS X (Darwin) are the only tested platforms.
 
 ## Usage
 
