@@ -29,7 +29,7 @@ const char *i_long_flag = "--iterative";
 const char *r_flag = "-r";
 const char *r_long_flag = "--recursive";
 
-// recursive calculuation of series
+/* recursive calculuation of series */
 uint64_t square_sum_rec(uint64_t num) {
 	if (num == 0) {
 		return 0;
@@ -38,7 +38,7 @@ uint64_t square_sum_rec(uint64_t num) {
 	}
 }
 
-// iterative calculation of series
+/* iterative calculation of series */
 uint64_t square_sum(uint64_t num) {
 	uint64_t n = 0;
 	uint64_t i; for (i = 0; i < num; i++) {
@@ -58,15 +58,15 @@ int main(int argc, char **argv) {
 		return usage(argv[0]);
 	} else {
 
-		uint64_t (*func)(uint64_t) = square_sum; // square function
+		uint64_t (*func)(uint64_t) = square_sum; /* square function */
 
-		int num_args = 0; // number of numbers as arguments
-		uint64_t num; // num arg
+		int num_args = 0; /* number of numbers as arguments */
+		uint64_t num; /* num arg */
 
-		// handle command line options (c89 compatible for loop)
+		/* handle command line options (c89 compatible for loop) */
 		int i; for (i = 1; i < argc; i++) {
 
-			// parse option
+			/* parse option */
 			if (argv[i][0] == '-') {
 				if (strcmp(argv[i], r_flag) == 0
 				|| strcmp(argv[i], r_long_flag) == 0) {
@@ -75,18 +75,18 @@ int main(int argc, char **argv) {
 				|| strcmp(argv[i], i_long_flag) == 0) {
 					func = square_sum;
 				} else {
-					// unknown argument, error.
+					/* unknown argument, error. */
 					fprintf(stderr, "unrecognized argument '%s'\n", argv[i]);
 					return usage(argv[0]);
 				}
 			} else {
-				// check if a number, else error
+				/* check if a number, else error */
 				char *end = argv[i] + strlen(argv[i]);
 				errno = 0;
 				num = strtoll(argv[i], &end, 10);
-				// catch conversion error
+				/* catch conversion error */
 				if (errno != 0) {
-					// error appropriately
+					/* error appropriately */
 					if (errno == ERANGE && num == LLONG_MAX) {
 						fprintf(stderr, "number too large, max: %lld\n", LLONG_MAX);
 					} else if (errno == ERANGE && num == LLONG_MIN) {
@@ -105,8 +105,8 @@ int main(int argc, char **argv) {
 			}
 		}
 
-		// check if args are satisfied
-		if (num_args != 1) { // accepts only one numerical argument
+		/* check if args are satisfied */
+		if (num_args != 1) { /* accepts only one numerical argument */
 			return usage(argv[0]);
 		} else {
 			printf("%lld\n", func(abs(num)));
