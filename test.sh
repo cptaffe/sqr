@@ -54,7 +54,7 @@ do_tests() {
 
 	# squares properly
 	TEST=("${CMD} 5")
-	for t in "${TEST}"; do
+	for t in "${TEST[@]}"; do
 		# test code
 		echo "${t}"
 		if test "$(${t})" -eq 25; then
@@ -66,7 +66,7 @@ do_tests() {
 
 	# test flag order (short)
 	TEST=("${CMD} -i 5" "${CMD} -r 5" "${CMD} 5 -i" "${CMD} 5 -r")
-	for t in "${TEST}"; do
+	for t in "${TEST[@]}"; do
 		# test code
 		echo "${t}"
 		if test "$(${t})" -eq 25; then
@@ -78,7 +78,7 @@ do_tests() {
 
 	# test flag order (long)
 	TEST=("${CMD} --iterative 5" "${CMD} --recursive 5" "${CMD} 5 --iterative" "${CMD} 5 --recursive")
-	for t in "${TEST}"; do
+	for t in "${TEST[@]}"; do
 		# test code
 		echo "${t}"
 		if test "$(${t})" -eq 25; then
@@ -89,8 +89,8 @@ do_tests() {
 	done
 
 	# text argument (fail is success)
-	TEST=("${CMD} hello")
-	for t in "${TEST}"; do
+	TEST=("${CMD} hello" "${CMD} 5 -h" "${CMD} 5 --hello")
+	for t in "${TEST[@]}"; do
 		# test code
 		echo "${t}"
 		${t} 2>&1 # redirects error message to whatever stdio is redirected to.
