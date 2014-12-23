@@ -85,25 +85,23 @@ int main(int argc, char **argv) {
 				char *end = NULL;
 				errno = 0;
 				num = strtoll(argv[i], &end, 10);
-				// catch conversion error (GNU strtoll does not set errno)
-				if (argv[i] == end) {
-					// error appropriately
-					if (errno != 0) {
-						if (errno == ERANGE && num == LLONG_MAX) {
-							fprintf(stderr, "number too large, max: %lld\n", LLONG_MAX);
-						} else if (errno == ERANGE && num == LLONG_MIN) {
-							fprintf(stderr, "number too small, min: %lld\n", LLONG_MIN);
-						} else if (errno == EINVAL) {
-							fprintf(stderr, "unrecognized argument '%s'\n", argv[i]);
-							usage(argv[0]);
-						} else {
-							fprintf(stderr, "%s\n", strerror(errno));
-							usage(argv[0]);
-						}
-					} else {
+				// catch conversion error
+				if (errno != 0) { // some set errno for specific failure
+					if (errno == ERANGE && num == LLONG_MAX) {
+						fprintf(stderr, "number too large, max: %lld\n", LLONG_MAX);
+					} else if (errno == ERANGE && num == LLONG_MIN) {
+						fprintf(stderr, "number too small, min: %lld\n", LLONG_MIN);
+					} else if (errno == EINVAL) {
 						fprintf(stderr, "unrecognized argument '%s'\n", argv[i]);
 						usage(argv[0]);
+					} else {
+						fprintf(stderr, "%s\n", strerror(errno));
+						usage(argv[0]);
 					}
+					return EXIT_FAILURE;
+				} else if (argv[i] == end) {
+					fprintf(stderr, "unrecognized argument '%s'\n", argv[i]);
+					usage(argv[0]);
 					return EXIT_FAILURE;
 				} else {
 					num_args++;

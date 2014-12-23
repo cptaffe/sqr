@@ -50,12 +50,15 @@ summary() {
 # as a function, io can be redirected as needed.
 do_tests() {
 
-	# squares properly
-	TEST=("${CMD} 5")
-	for t in "${TEST[@]}"; do
+	# test for squaring ability
+	TEST=("${CMD} 5" "${CMD} 6")
+	ANS=("25" "36")
+	for ((i=0;i<${#TEST[@]};++i)); do
 		# test code
+		t="${TEST[i]}"
+		a="${ANS[i]}"
 		echo "${t}"
-		if test "$(${t})" -eq 25; then
+		if test "$(${t})" -eq "${a}"; then
 			pass
 		else
 			fail
@@ -88,6 +91,35 @@ do_tests() {
 
 	# text argument (fail is success)
 	TEST=("${CMD} hello" "${CMD} 5 -h" "${CMD} 5 --hello")
+	for t in "${TEST[@]}"; do
+		# test code
+		echo "${t}"
+		${t} 2>&1 # redirects error message to whatever stdio is redirected to.
+		if test "${?}" -ne 0; then
+			pass
+		else
+			fail
+		fi
+	done
+
+	# test for sign support
+	TEST=("${CMD} -5" "${CMD} -6")
+	ANS=("25" "36")
+	for ((i=0;i<${#TEST[@]};++i)); do
+		# test code
+		t="${TEST[i]}"
+		a="${ANS[i]}"
+		echo "${t}"
+		if test "$(${t})" -eq "${a}"; then
+			pass
+		else
+			fail
+		fi
+	done
+
+	# fail for too large or too small numbers
+	# llong range (-9223372036854775808, 9223372036854775807)
+	TEST=("${CMD} 9223372036854775808" "${CMD} -9223372036854775809")
 	for t in "${TEST[@]}"; do
 		# test code
 		echo "${t}"
