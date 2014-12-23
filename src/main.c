@@ -67,7 +67,7 @@ int main(int argc, char **argv) {
 		int i; for (i = 1; i < argc; i++) {
 
 			/* parse option */
-			if (argv[i][0] == '-') {
+			if (argv[i][0] == '-' && !isdigit(argv[i][1])) {
 				if (strcmp(argv[i], r_flag) == 0
 				|| strcmp(argv[i], r_long_flag) == 0) {
 					func = square_sum_rec;
