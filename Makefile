@@ -18,6 +18,7 @@ INSTMAN = /usr/local/share/man/man1/
 all: $(BIN) test
 
 $(BIN): $(OBJ)
+	mkdir -p $(dir $(BIN))
 	$(CC) $(CFLAGS) -o $(BIN) $(OBJ)
 
 clean:
