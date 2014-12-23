@@ -36,6 +36,7 @@ test:
 # install with proper permissions & ownership
 install:
 	install $(BIN) $(INSTBIN)
+	mkdir -p $(dir $(INSTMAN))
 	install -m 644 $(MAN) $(INSTMAN)
 
 # uninstalls installed files
