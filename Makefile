@@ -1,9 +1,18 @@
 
 CFLAGS = -g
 
-SRC = main.c
+# compiling options
+SRC = src/main.c
 OBJ = $(SRC:.c=.o)
-BIN = sqr
+BIN = bin/sqr
+LOG = log.txt # testing log
+
+# man page
+MAN = man/sqr.1
+
+# installing options
+INSTBIN = /usr/local/bin
+INSTMAN = /usr/local/share/man/man1/
 
 # make binary, test
 all: $(BIN) test
@@ -12,7 +21,11 @@ $(BIN): $(OBJ)
 	$(CC) $(CFLAGS) -o $(BIN) $(OBJ)
 
 clean:
-	rm $(OBJ) $(BIN)
+	rm $(OBJ) $(BIN) $(LOG)
 
 test:
-	./test.sh ./$(BIN)
+	./test.sh ./$(BIN) $(LOG)
+
+install:
+	install $(BIN) $(INSTBIN)
+	install -m 644 $(MAN) $(INSTMAN)

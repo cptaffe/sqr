@@ -2,21 +2,19 @@
 
 # test script for sqr
 
-# config section
-LOG_FILE="log.txt"
-
 # set -o errexit # testing, failures are good.
 set -o pipefail
 set -o nounset
 # set -o xtrace
 
 usage() {
-	echo "${0} command"
+	echo "${0} command logfile"
 }
 
 # config
-if test "${#}" -ge 1; then
+if test "${#}" -eq 2; then
 	CMD="${1}"
+	LOG_FILE="${2}"
 else
 	usage;
 	exit 1

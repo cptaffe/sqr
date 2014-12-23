@@ -1,0 +1,18 @@
+.TH SQRSUM 1 "Dec 23, 2014" BSD "BSD General Commands Manual"
+
+.SH NAME
+sqr \-- square a number
+
+.SH SYNOPSIS
+\fBsqr\fR num <args>
+
+.SH DESCRIPTION
+\fBsqr\fR squares a given number, \fBnum\fR, by summing the sequence of squares from 1 to num.
+
+A square, plus two times its root, plus 1 is the square of the next integer. This has been programmed both iteratively and recursively. The iterative method is default, but chosen by supplying these arguments:
+.TP
+[\fB-i\fR | \fB--iterative\fR]
+iterative calculation
+.TP
+[\fB-r\fR | \fB--recursive\fR]
+recursive calculation
