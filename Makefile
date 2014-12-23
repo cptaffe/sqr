@@ -15,4 +15,4 @@ clean:
 	rm $(OBJ) $(BIN)
 
 test:
-	./test.sh $(BIN)
+	./test.sh ./$(BIN)

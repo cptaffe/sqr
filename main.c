@@ -1,8 +1,8 @@
 /*
 
-Recursive square using a sequence of differences of squares.
+square using a sequence of differences of squares.
 
-f = x -> x^2
+f: x -> x^2
 
 f(x + 1) - x^2 = 2x + 1
 
@@ -60,7 +60,7 @@ int main(int argc, char **argv) {
 
 		uint64_t (*func)(uint64_t) = square_sum; // square function
 
-		int num_arg_exists = 0; // number argument must exist
+		int num_args = 0; // number of numbers as arguments
 		uint64_t num; // num arg
 
 		// handle command line options
@@ -80,9 +80,10 @@ int main(int argc, char **argv) {
 					return usage(argv[0]);
 				}
 			} else {
-				// check if the number, else error
+				// check if a number, else error
+				char *end = argv[i] + strlen(argv[i]);
 				errno = 0;
-				num = strtoll(argv[i], NULL, 10);
+				num = strtoll(argv[i], &end, 10);
 				// catch conversion error
 				if (errno != 0) {
 					// error appropriately
@@ -99,13 +100,13 @@ int main(int argc, char **argv) {
 					}
 					return 1;
 				} else {
-					num_arg_exists++;
+					num_args++;
 				}
 			}
 		}
 
 		// check if args are satisfied
-		if (num_arg_exists != 1) {
+		if (num_args != 1) { // accepts only one numerical argument
 			return usage(argv[0]);
 		} else {
 			printf("%lld\n", func(abs(num)));
