@@ -31,6 +31,7 @@ install:
 	install $(BIN) $(INSTBIN)
 	install -m 644 $(MAN) $(INSTMAN)
 
+# uninstalls installed files
 remove:
 	$(RM) $(INSTBIN)/$(notdir $(BIN))
 	$(RM) $(INSTMAN)/$(notdir $(MAN))
