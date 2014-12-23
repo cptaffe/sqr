@@ -17,7 +17,7 @@ ifeq ($(shell uname), Darwin)
 	INSTMAN = /usr/local/share/man/man1/
 else
 	# default to Linux
-	INSTMAN = /usr/local/man/
+	INSTMAN = /usr/local/man/man1/
 endif
 
 # make binary, test
