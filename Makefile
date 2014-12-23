@@ -26,6 +26,11 @@ clean:
 test:
 	./test.sh ./$(BIN) $(LOG)
 
+# install with proper permissions & ownership
 install:
 	install $(BIN) $(INSTBIN)
 	install -m 644 $(MAN) $(INSTMAN)
+
+remove:
+	$(RM) $(INSTBIN)/$(notdir $(BIN))
+	$(RM) $(INSTMAN)/$(notdir $(MAN))
