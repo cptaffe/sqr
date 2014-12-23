@@ -7,6 +7,10 @@ Calculates the square of a number as a series of differences of squares.
 
 This program is not very efficient nor useful, but it is a delve into using some very simple but interesting mathematics.
 
+## Systems
+
+Debian Linux (Jessie/testing) and OS X (Darwin) are the only tested platforms.
+
 ## Usage
 
 ```
