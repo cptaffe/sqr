@@ -2,6 +2,9 @@
 
 # test script for sqr
 
+# config section
+LOG_FILE="log.txt"
+
 # set -o errexit # testing, failures are good.
 set -o pipefail
 set -o nounset
@@ -35,59 +38,70 @@ pass() {
 	echo "pass!"
 }
 
-sum() {
-	echo # whitespace
+summary() {
 	echo "passes: ${PASS}"
 	echo "failures: ${FAIL}"
+
+	# exit unhappily on failures.
 	if test "${FAIL}" -gt 0; then
 		exit 1
 	fi
 }
 
-# tests
+# do_tests runs all tests
+# as a function, io can be redirected as needed.
+do_tests() {
 
-# squares properly
-if test "$(${CMD} 5)" -eq 25; then
-	pass
-else
-	fail
-fi
+	# squares properly
+	TEST=("${CMD} 5")
+	for t in "${TEST}"; do
+		# test code
+		echo "${t}"
+		if test "$(${t})" -eq 25; then
+			pass
+		else
+			fail
+		fi
+	done
 
-# test flag order (short)
-TEST=("${CMD} -i 5" "${CMD} -r 5" "${CMD} 5 -i" "${CMD} 5 -r")
-for t in "${TEST}"; do
-	# test code
-	echo "${t}"
-	if test "$(${t})" -eq 25; then
-		pass
-	else
-		fail
-	fi
-done
+	# test flag order (short)
+	TEST=("${CMD} -i 5" "${CMD} -r 5" "${CMD} 5 -i" "${CMD} 5 -r")
+	for t in "${TEST}"; do
+		# test code
+		echo "${t}"
+		if test "$(${t})" -eq 25; then
+			pass
+		else
+			fail
+		fi
+	done
 
-# test flag order (long)
-TEST=("${CMD} --iterative 5" "${CMD} --recursive 5" "${CMD} 5 --iterative" "${CMD} 5 --recursive")
-for t in "${TEST}"; do
-	# test code
-	echo "${t}"
-	if test "$(${t})" -eq 25; then
-		pass
-	else
-		fail
-	fi
-done
+	# test flag order (long)
+	TEST=("${CMD} --iterative 5" "${CMD} --recursive 5" "${CMD} 5 --iterative" "${CMD} 5 --recursive")
+	for t in "${TEST}"; do
+		# test code
+		echo "${t}"
+		if test "$(${t})" -eq 25; then
+			pass
+		else
+			fail
+		fi
+	done
 
-# number argument
-TEST="${CMD} hello"
-for t in "${TEST}"; do
-	# test code
-	echo "${t}"
-	${t}
-	if test "${?}" -ne 0; then
-		pass
-	else
-		fail
-	fi
-done
+	# text argument (fail is success)
+	TEST=("${CMD} hello")
+	for t in "${TEST}"; do
+		# test code
+		echo "${t}"
+		${t} 2>&1 # redirects error message to whatever stdio is redirected to.
+		if test "${?}" -ne 0; then
+			pass
+		else
+			fail
+		fi
+	done
+}
 
-sum # summarize testing
+do_tests > "${LOG_FILE}"
+
+summary # summarize testing
