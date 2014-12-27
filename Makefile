@@ -11,14 +11,8 @@ LOG = log.txt # testing log
 MAN = man/sqr.1
 
 # installing options
-INSTBIN = /usr/local/bin
-
-ifeq ($(shell uname), Darwin)
-	INSTMAN = /usr/local/share/man/man1/
-else
-	# default to Linux
-	INSTMAN = /usr/local/man/man1/
-endif
+INSTBIN = $(INSTALL)/usr/bin
+INSTMAN = $(INSTALL)/usr/share/man/man1/
 
 # make binary, test
 all: $(BIN) test
