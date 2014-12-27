@@ -3,6 +3,8 @@ squaresum
 
 Calculates the square of a number as a series of differences of squares.
 
+To install, either download the tar from the newest [release](https://github.com/cptaffe/sqr/releases/tag/v0.1), or the ubuntu [ppa](https://launchpad.net/~cptaffe/+archive/ubuntu/sqr).
+
 ## Resoning
 
 This program is not very efficient nor useful, but it is a delve into using some very simple but interesting mathematics.
