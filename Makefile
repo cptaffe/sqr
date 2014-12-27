@@ -28,7 +28,7 @@ test:
 	./test.sh ./$(BIN) $(LOG)
 
 # install with proper permissions & ownership
-install:
+install: all
 	mkdir -p $(INSTMAN) $(INSTBIN)
 	install $(BIN) $(INSTBIN)
 	install -m 644 $(MAN) $(INSTMAN)
