@@ -22,7 +22,7 @@ $(BIN): $(OBJ)
 	$(CC) $(CFLAGS) -o $(BIN) $(OBJ)
 
 clean:
-	rm $(OBJ) $(BIN) $(LOG)
+	rm -f $(OBJ) $(BIN) $(LOG)
 
 test:
 	./test.sh ./$(BIN) $(LOG)
