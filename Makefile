@@ -29,12 +29,11 @@ test:
 
 # install with proper permissions & ownership
 install:
+	mkdir -p $(INSTMAN) $(INSTBIN)
 	install $(BIN) $(INSTBIN)
-	mkdir -p $(dir $(INSTMAN))
 	install -m 644 $(MAN) $(INSTMAN)
 
 # uninstalls installed files
 remove:
 	$(RM) $(INSTBIN)/$(notdir $(BIN))
-	mkdir -p $(dir $(INSTMAN))
 	$(RM) $(INSTMAN)/$(notdir $(MAN))
